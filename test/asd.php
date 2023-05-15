@@ -18,7 +18,7 @@ $randomIndex = array_rand($taskArray);
 $randomTask = $taskArray[$randomIndex];
 $randomSolution = $solutionArray[$randomIndex];
 
-// Output the randomly selected task and solution
+// Output the randomly selected task and solution.
 echo "Random Task:\n";
 echo $randomTask;
 echo "\n";
