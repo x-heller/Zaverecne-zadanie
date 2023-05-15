@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // TODO: Skontrolovat ci login a password su zadane (podobne ako v register.php).
 
-    $sql = "SELECT fullname, email, login, password FROM users WHERE login = :login";
+    $sql = "SELECT fullname, email, login, password,type FROM users WHERE login = :login";
 
     $stmt = $pdo->prepare($sql);
 
@@ -49,9 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION["login"] = $row['login'];
                     $_SESSION["fullname"] = $row['fullname'];
                     $_SESSION["email"] = $row['email'];
+                    $_SESSION["type"] = $row['type'];
+
+                    if($_SESSION["type"] == "student"){
+                        header("location: student.php");
+                    }
+                    if($_SESSION["type"] == "teacher"){
+                        header("location: teacher.php");
+                    }
 
                     //  Presmeruj pouzivatela na zabezpecenu stranku.
-                    header("location: restricted.php");
                 }
             } else {
                 echo "Nespravne meno alebo heslo.";

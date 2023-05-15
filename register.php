@@ -103,13 +103,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // TODO: Validacia mena, priezviska
 
     if (empty($errmsg)) {
-        $sql = "INSERT INTO users (fullname, login, email, password) VALUES (:fullname, :login, :email, :password)";
+        $sql = "INSERT INTO users (fullname, login, email, password, type) VALUES (:fullname, :login, :email, :password,:type)";
 
         $fullname = $_POST['firstname'] . ' ' . $_POST['lastname'];
         $email = $_POST['email'];
         $login = $_POST['login'];
         $type = $_POST['type'];
         $hashed_password = password_hash($_POST['password'], PASSWORD_ARGON2ID);
+        echo $type;
 
         // Bind parametrov do SQL
         $stmt = $pdo->prepare($sql);
