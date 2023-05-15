@@ -108,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fullname = $_POST['firstname'] . ' ' . $_POST['lastname'];
         $email = $_POST['email'];
         $login = $_POST['login'];
+        $type = $_POST['type'];
         $hashed_password = password_hash($_POST['password'], PASSWORD_ARGON2ID);
 
         // Bind parametrov do SQL
@@ -117,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->bindParam(":login", $login, PDO::PARAM_STR);
         $stmt->bindParam(":password", $hashed_password, PDO::PARAM_STR);
+        $stmt->bindParam(":type",$type, PDO::PARAM_STR);
         $stmt->execute();
 
         unset($stmt);
@@ -196,6 +198,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="password">
             Heslo:
             <input type="password" name="password" value="" id="password" required>
+        </label>
+        <br>
+        <label for="type">
+            Student:
+            <input type="radio" name="type" value="student" checked>
+            Teacher:
+            <input type="radio" name="type" value="teacher">
         </label>
 
         <br>

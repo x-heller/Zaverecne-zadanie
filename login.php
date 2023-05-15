@@ -9,7 +9,15 @@ session_start();
 $_SESSION["loggedin"] = false;
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: restricted.php");
+    if($_SESSION["type"] == "student"){
+        header("location: student.php");
+        exit;
+    }
+    if($_SESSION["type"] == "teacher"){
+        header("location: teacher.php");
+        exit;
+    }
+
     exit;
 }
 
