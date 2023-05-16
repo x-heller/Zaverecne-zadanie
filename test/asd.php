@@ -55,56 +55,41 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                     symbolText = '<mo>' + symbol + '</mo>';
                     break;
                 case '\\frac{a}{b}':
-                    symbolText = '<mfrac><mi>a</mi><mi>b</mi></mfrac>';
+                    symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac><mi>+</mi>';
                     break;
                 case 'a^2':
-                    symbolText = '<msup><mi>a</mi><mn>2</mn></msup>';
+                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow><mi>+</mi>';
                     break;
                 case '\\sqrt{x}':
-                    symbolText = '<msqrt><mi>x</mi></msqrt>';
+                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow><mi>+</mi>';
                     break;
                 // Add cases for other symbols as needed
             }
 
             // Create a temporary MathML container element
-            var tempContainer = document.createElement('div');
-            tempContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
+            // Create a MathML representation of the expression;
 
-            // Get the MathML representation from the container element
+            // Create a temporary container for the MathML
+            //var tempContainer = document.createElement('div');
+           // tempContainer.innerHTML = symbolText;
+            var tempContainer = document.getElementById('mainrow');
+            tempContainer.innerHTML = tempContainer.innerHTML+symbolText;
+            // Get the MathML element from the container
             var mathMLElement = tempContainer.firstChild;
 
-            // Get the current selection range
+            // Insert the MathML element at the current cursor position
             var selection = window.getSelection();
             var range = selection.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(mathMLElement);
 
-            // Check if the selection is inside the solutionInput element
-            if (range.commonAncestorContainer === solutionInput || solutionInput.contains(range.commonAncestorContainer)) {
-                // Create a new MathML element for the symbol
-                var symbolContainer = document.createElement('span');
-                symbolContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
-                var symbolNode = symbolContainer.firstChild;
+            // Insert a space after the MathML element
+            var spaceNode = document.createTextNode(' ');
+            range.insertNode(spaceNode);
 
-                // Wrap the symbolNode with a <span> element
-                var spanNode = document.createElement('span');
-                spanNode.appendChild(symbolNode);
-
-                // Insert the symbol at the appropriate position in the solution input
-                range.deleteContents();
-                range.insertNode(spanNode);
-
-                // Set the selection range to the end of the inserted symbol
-                range.setStartAfter(spanNode);
-                range.setEndAfter(spanNode);
-            } else {
-                // Append the MathML element to the solution input
-                solutionInput.appendChild(mathMLElement);
-
-                // Set the selection range to the end of the inserted symbol
-                range.setStartAfter(mathMLElement);
-                range.setEndAfter(mathMLElement);
-            }
-
-            // Collapse the selection range to the end
+            // Move the cursor after the inserted space
+            range.setStartAfter(spaceNode);
+            range.setEndAfter(spaceNode);
             selection.removeAllRanges();
             selection.addRange(range);
 
@@ -113,7 +98,6 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                 console.log(err.message);
             });
         }
-
 
 
 
@@ -141,7 +125,10 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
 <h1>Write Your Solution:</h1>
 <div id="solutionContainer">
-    <div id="solutionInput" contenteditable="true"></div>
+
+    <div id="solutionInput" contenteditable="true">
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow id="mainrow"></mrow></math>
+    </div>
     <div id="symbolBox">
         <button class="symbolButton" onclick="addSymbol('+')">+</button>
         <button class="symbolButton" onclick="addSymbol('-')">-</button>
