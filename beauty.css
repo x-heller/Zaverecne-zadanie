@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: red dashed 1px;
+}
+#name{
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#title{
+    color: blue;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#button{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#buttoncontainer{
+    position: absolute;
+    top:2%;
+    right: 2%;
+}
+a{
+    text-decoration: none;
+    width: 150px;
+    height: 200px;
+    line-height: 50px;
+    background-color: #000000;
+    color: white;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+
+}
