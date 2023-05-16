@@ -51,10 +51,10 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                     symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac>';
                     break;
                 case 'a^2':
-                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow>';
+                    symbolText = '<msup><mi>a</mi><mn>2</mn></msup>';
                     break;
                 case '\\sqrt{x}':
-                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow>';
+                    symbolText = '<msqrt><mi>x</mi></msqrt>';
                     break;
                 // Add cases for other symbols as needed
             }
@@ -80,6 +80,10 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
             // Insert the <mrow> element into the range
             range.insertNode(mrowElement);
+            var brElement = solutionInput.querySelector('br');
+            if (brElement) {
+                brElement.parentNode.removeChild(brElement);
+            }
         }
 
         function submitSolution() {
