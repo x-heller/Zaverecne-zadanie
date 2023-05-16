@@ -38,15 +38,94 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
     <script type="text/javascript">
         // Function to handle adding symbols to the solution input
-        function addSymbol(symbol) {
+        // Function to handle adding symbols to the solution input
+        // Function to handle adding symbols to the solution input
+        // Function to handle adding symbols to the solution input
+        // Function to handle adding symbols to the solution input
+        // Function to handle adding symbols to the solution input
+        // Function to handle adding symbols to the solution input
+        function addSymbol(symbol, event) {
             var solutionInput = document.getElementById('solutionInput');
-            solutionInput.innerHTML += symbol;
+            var symbolText = '';
+
+            // Convert symbols to LaTeX format
+            switch (symbol) {
+                case '+':
+                case '-':
+                    symbolText = '<mo>' + symbol + '</mo>';
+                    break;
+                case '\\frac{a}{b}':
+                    symbolText = '<mfrac><mi>a</mi><mi>b</mi></mfrac>';
+                    break;
+                case 'a^2':
+                    symbolText = '<msup><mi>a</mi><mn>2</mn></msup>';
+                    break;
+                case '\\sqrt{x}':
+                    symbolText = '<msqrt><mi>x</mi></msqrt>';
+                    break;
+                // Add cases for other symbols as needed
+            }
+
+            // Create a temporary MathML container element
+            var tempContainer = document.createElement('div');
+            tempContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
+
+            // Get the MathML representation from the container element
+            var mathMLElement = tempContainer.firstChild;
+
+            // Get the current selection range
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+
+            // Check if the selection is inside the solutionInput element
+            if (range.commonAncestorContainer === solutionInput || solutionInput.contains(range.commonAncestorContainer)) {
+                // Create a new MathML element for the symbol
+                var symbolContainer = document.createElement('span');
+                symbolContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
+                var symbolNode = symbolContainer.firstChild;
+
+                // Wrap the symbolNode with a <span> element
+                var spanNode = document.createElement('span');
+                spanNode.appendChild(symbolNode);
+
+                // Get the start container and offset of the range
+                var startContainer = range.startContainer;
+                var startOffset = range.startOffset;
+
+                // Check if the start container is a text node
+                if (startContainer.nodeType === Node.TEXT_NODE) {
+                    // Split the text node at the start offset
+                    var textNode = startContainer.splitText(startOffset);
+
+                    // Insert the symbol at the split point
+                    textNode.parentNode.insertBefore(spanNode, textNode);
+                } else {
+                    // Insert the symbol at the start offset
+                    startContainer.insertBefore(spanNode, startContainer.childNodes[startOffset]);
+                }
+
+                // Set the selection range to the end of the inserted symbol
+                range.setStartAfter(spanNode);
+                range.setEndAfter(spanNode);
+            } else {
+                // Append the MathML element to the solution input
+                solutionInput.appendChild(mathMLElement);
+
+                // Set the selection range to the end of the inserted symbol
+                range.setStartAfter(mathMLElement);
+                range.setEndAfter(mathMLElement);
+            }
+
+            // Collapse the selection range to the end
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            // Trigger MathJax typesetting for the updated content
             MathJax.typesetPromise([solutionInput]).catch(function (err) {
                 console.log(err.message);
             });
         }
 
-        // Function to handle solution submission
         function submitSolution() {
             var userSolution = document.getElementById('solutionInput').innerHTML;
             // Perform solution evaluation here
