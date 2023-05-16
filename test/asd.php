@@ -41,6 +41,8 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             var solutionInput = document.getElementById('solutionInput');
             var symbolText = '';
 
+
+
             // Convert symbols to LaTeX format
             switch (symbol) {
                 case '+':
@@ -51,10 +53,10 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                     symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac>';
                     break;
                 case 'a^2':
-                    symbolText = '<msup><mi>a</mi><mn>2</mn></msup>';
+                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow>';
                     break;
                 case '\\sqrt{x}':
-                    symbolText = '<msqrt><mi>x</mi></msqrt>';
+                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow>';
                     break;
                 // Add cases for other symbols as needed
             }
@@ -78,12 +80,15 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             var sel = window.getSelection();
             var range = sel.getRangeAt(0);
 
-            // Insert the <mrow> element into the range
-            range.insertNode(mrowElement);
+
+            // Remove the unwanted <br> tag if it exists
             var brElement = solutionInput.querySelector('br');
             if (brElement) {
                 brElement.parentNode.removeChild(brElement);
             }
+            // Insert the <mrow> element into the range
+            range.insertNode(mrowElement);
+
         }
 
         function submitSolution() {
