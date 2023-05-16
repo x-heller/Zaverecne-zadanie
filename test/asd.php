@@ -88,21 +88,9 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                 var spanNode = document.createElement('span');
                 spanNode.appendChild(symbolNode);
 
-                // Get the start container and offset of the range
-                var startContainer = range.startContainer;
-                var startOffset = range.startOffset;
-
-                // Check if the start container is a text node
-                if (startContainer.nodeType === Node.TEXT_NODE) {
-                    // Split the text node at the start offset
-                    var textNode = startContainer.splitText(startOffset);
-
-                    // Insert the symbol at the split point
-                    textNode.parentNode.insertBefore(spanNode, textNode);
-                } else {
-                    // Insert the symbol at the start offset
-                    startContainer.insertBefore(spanNode, startContainer.childNodes[startOffset]);
-                }
+                // Insert the symbol at the appropriate position in the solution input
+                range.deleteContents();
+                range.insertNode(spanNode);
 
                 // Set the selection range to the end of the inserted symbol
                 range.setStartAfter(spanNode);
@@ -125,6 +113,17 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                 console.log(err.message);
             });
         }
+
+
+
+
+
+
+
+
+
+
+
 
         function submitSolution() {
             var userSolution = document.getElementById('solutionInput').innerHTML;
