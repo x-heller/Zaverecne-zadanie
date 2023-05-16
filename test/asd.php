@@ -37,59 +37,6 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
     <script type="text/javascript">
-        function addSymbol(symbol, event) {
-            var solutionInput = document.getElementById('solutionInput');
-            var symbolText = '';
-
-
-
-            // Convert symbols to LaTeX format
-            switch (symbol) {
-                case '+':
-                case '-':
-                    symbolText = '<mo>' + symbol + '</mo>';
-                    break;
-                case '\\frac{a}{b}':
-                    symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac>';
-                    break;
-                case 'a^2':
-                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow>';
-                    break;
-                case '\\sqrt{x}':
-                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow>';
-                    break;
-                // Add cases for other symbols as needed
-            }
-
-            // Create a temporary container for the MathML
-            var div = document.createElement('div');
-
-            // Set the symbolText as the content of the <div> element
-            div.innerHTML = symbolText;
-
-            // Get the MathML code from the <div> element
-            var mathML = div.firstChild.outerHTML;
-
-            // Create the <mrow> element
-            var mrowElement = document.createElementNS("http://www.w3.org/1998/Math/MathML", "mrow");
-
-            // Set the MathML code as the content of the <mrow> element
-            mrowElement.innerHTML = mathML;
-
-            // Get the current selection and range
-            var sel = window.getSelection();
-            var range = sel.getRangeAt(0);
-
-
-            // Remove the unwanted <br> tag if it exists
-            var brElement = solutionInput.querySelector('br');
-            if (brElement) {
-                brElement.parentNode.removeChild(brElement);
-            }
-            // Insert the <mrow> element into the range
-            range.insertNode(mrowElement);
-
-        }
 
         function submitSolution() {
             var userSolution = document.getElementById('solutionInput').innerHTML;
@@ -97,6 +44,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             alert('Submitted Solution: ' + userSolution);
         }
     </script>
+    <script defer src="//unpkg.com/mathlive"></script>
 </head>
 <body>
 <h1>Random Task:</h1>
@@ -106,17 +54,8 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 <p><?php echo $randomSolution; ?></p>
 
 <h1>Write Your Solution:</h1>
-<div id="solutionContainer">
-    <div id="solutionInput" style="border: 1px solid #ccc; padding: 5px; width: 300px;" contenteditable="plaintext-only"></div>
-    <div id="symbolBox">
-        <button class="symbolButton" onclick="addSymbol('+')">+</button>
-        <button class="symbolButton" onclick="addSymbol('-')">-</button>
-        <button class="symbolButton" onclick="addSymbol('\\frac{a}{b}')">\(\frac{a}{b}\)</button>
-        <button class="symbolButton" onclick="addSymbol('a^2')">\(a^2\)</button>
-        <button class="symbolButton" onclick="addSymbol('\\sqrt{x}')">\(\sqrt{x}\)</button>
-        <!-- Add more buttons for other symbols as needed -->
-    </div>
-</div>
+<math-field></math-field>
+
 
 <button id="submitSolution" onclick="submitSolution()">Submit</button>
 
@@ -128,7 +67,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     #solutionInput {
         border: 1px solid #ccc;
         padding: 5px;
-        width: 300px;
+        width: 300px;s
     }
 
     #symbolBox {
