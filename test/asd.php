@@ -37,13 +37,6 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
     <script type="text/javascript">
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
         function addSymbol(symbol, event) {
             var solutionInput = document.getElementById('solutionInput');
             var symbolText = '';
@@ -55,75 +48,39 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                     symbolText = '<mo>' + symbol + '</mo>';
                     break;
                 case '\\frac{a}{b}':
-                    symbolText = '<mfrac><mi>a</mi><mi>b</mi></mfrac>';
+                    symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac>';
                     break;
                 case 'a^2':
-                    symbolText = '<msup><mi>a</mi><mn>2</mn></msup>';
+                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow>';
                     break;
                 case '\\sqrt{x}':
-                    symbolText = '<msqrt><mi>x</mi></msqrt>';
+                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow>';
                     break;
                 // Add cases for other symbols as needed
             }
 
-            // Create a temporary MathML container element
-            var tempContainer = document.createElement('div');
-            tempContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
+            // Create a temporary container for the MathML
+            var div = document.createElement('div');
 
-            // Get the MathML representation from the container element
-            var mathMLElement = tempContainer.firstChild;
+            // Set the symbolText as the content of the <div> element
+            div.innerHTML = symbolText;
 
-            // Get the current selection range
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
+            // Get the MathML code from the <div> element
+            var mathML = div.firstChild.outerHTML;
 
-            // Check if the selection is inside the solutionInput element
-            if (range.commonAncestorContainer === solutionInput || solutionInput.contains(range.commonAncestorContainer)) {
-                // Create a new MathML element for the symbol
-                var symbolContainer = document.createElement('span');
-                symbolContainer.innerHTML = '<math xmlns="http://www.w3.org/1998/Math/MathML">' + symbolText + '</math>';
-                var symbolNode = symbolContainer.firstChild;
+            // Create the <mrow> element
+            var mrowElement = document.createElementNS("http://www.w3.org/1998/Math/MathML", "mrow");
 
-                // Wrap the symbolNode with a <span> element
-                var spanNode = document.createElement('span');
-                spanNode.appendChild(symbolNode);
+            // Set the MathML code as the content of the <mrow> element
+            mrowElement.innerHTML = mathML;
 
-                // Insert the symbol at the appropriate position in the solution input
-                range.deleteContents();
-                range.insertNode(spanNode);
+            // Get the current selection and range
+            var sel = window.getSelection();
+            var range = sel.getRangeAt(0);
 
-                // Set the selection range to the end of the inserted symbol
-                range.setStartAfter(spanNode);
-                range.setEndAfter(spanNode);
-            } else {
-                // Append the MathML element to the solution input
-                solutionInput.appendChild(mathMLElement);
-
-                // Set the selection range to the end of the inserted symbol
-                range.setStartAfter(mathMLElement);
-                range.setEndAfter(mathMLElement);
-            }
-
-            // Collapse the selection range to the end
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            // Trigger MathJax typesetting for the updated content
-            MathJax.typesetPromise([solutionInput]).catch(function (err) {
-                console.log(err.message);
-            });
+            // Insert the <mrow> element into the range
+            range.insertNode(mrowElement);
         }
-
-
-
-
-
-
-
-
-
-
-
 
         function submitSolution() {
             var userSolution = document.getElementById('solutionInput').innerHTML;
@@ -141,7 +98,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
 <h1>Write Your Solution:</h1>
 <div id="solutionContainer">
-    <div id="solutionInput" contenteditable="true"></div>
+    <div id="solutionInput" style="border: 1px solid #ccc; padding: 5px; width: 300px;" contenteditable="plaintext-only"></div>
     <div id="symbolBox">
         <button class="symbolButton" onclick="addSymbol('+')">+</button>
         <button class="symbolButton" onclick="addSymbol('-')">-</button>
@@ -177,10 +134,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 </style>
 
 <script>
-    // Trigger MathJax typesetting after the page has loaded
-    window.addEventListener('load', function() {
-        MathJax.typeset();
-    });
 </script>
 </body>
 </html>
+
