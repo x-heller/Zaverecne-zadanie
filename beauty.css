@@ -3,6 +3,7 @@
     padding: 0;
     border: red dashed 1px;
 }
+
 #name{
     color: red;
     font-size: 20px;
@@ -42,4 +43,22 @@ a{
     border-radius: 10px;
     padding: 10px;
 
+}
+
+#tableDiv{
+    display: flex;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+td, th{
+    padding: 20px;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+#asName{
+    width: 500px
 }

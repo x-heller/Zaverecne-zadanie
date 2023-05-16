@@ -46,39 +46,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Teacher</title>
+
+    <link rel="stylesheet" href="beauty.css">
 </head>
 <body>
-    <h1>Teacher portal</h1>
-    <h3><?php echo $_SESSION["fullname"]?></h3>
+    <h1 id="title">Teacher portal</h1>
+    <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 
-    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <table>
-            <thead>
-            <tr>
-                <th>File Name</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $counter = 1;
-            foreach ($files as $file):
-                if ($file !== '.' && $file !== '..'):
-                    $newName = 'Assignment' . $counter;
-                    ?>
-                    <tr>
-                        <td><?php echo $newName; ?></td>
-                        <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
-                    </tr>
-                    <?php
-                    $counter++;
-                endif;
-            endforeach;
-            ?>
-            </tbody>
-        </table>
-        <button type="submit">Save</button>
-    </form>
+    <div id="tableDiv">
+        <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+            <table>
+                <thead>
+                <tr>
+                    <th>Available assignments</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <?php foreach ($files as $file): ?>
+                    <?php if ($file !== '.' && $file !== '..'): ?>
+                        <tr>
+                            <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
+                            <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <button type="submit">Save</button>
+        </form>
+    </div>
 </body>
 </html>
 
