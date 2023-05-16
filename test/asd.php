@@ -37,13 +37,6 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
     <script type="text/javascript">
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
-        // Function to handle adding symbols to the solution input
         function addSymbol(symbol, event) {
             var solutionInput = document.getElementById('solutionInput');
             var symbolText = '';
@@ -55,59 +48,39 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
                     symbolText = '<mo>' + symbol + '</mo>';
                     break;
                 case '\\frac{a}{b}':
-                    symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac><mi>+</mi>';
+                    symbolText = '<mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac>';
                     break;
                 case 'a^2':
-                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow><mi>+</mi>';
+                    symbolText = '<mrow><msup><mi>a</mi><mn>2</mn></msup></mrow>';
                     break;
                 case '\\sqrt{x}':
-                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow><mi>+</mi>';
+                    symbolText = '<mrow><msqrt><mi>x</mi></msqrt></mrow>';
                     break;
                 // Add cases for other symbols as needed
             }
 
-            // Create a temporary MathML container element
-            // Create a MathML representation of the expression;
-
             // Create a temporary container for the MathML
-            //var tempContainer = document.createElement('div');
-           // tempContainer.innerHTML = symbolText;
-            var tempContainer = document.getElementById('mainrow');
-            tempContainer.innerHTML = tempContainer.innerHTML+symbolText;
-            // Get the MathML element from the container
-            var mathMLElement = tempContainer.firstChild;
+            var div = document.createElement('div');
 
-            // Insert the MathML element at the current cursor position
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
-            range.deleteContents();
-            range.insertNode(mathMLElement);
+            // Set the symbolText as the content of the <div> element
+            div.innerHTML = symbolText;
 
-            // Insert a space after the MathML element
-            var spaceNode = document.createTextNode(' ');
-            range.insertNode(spaceNode);
+            // Get the MathML code from the <div> element
+            var mathML = div.firstChild.outerHTML;
 
-            // Move the cursor after the inserted space
-            range.setStartAfter(spaceNode);
-            range.setEndAfter(spaceNode);
-            selection.removeAllRanges();
-            selection.addRange(range);
+            // Create the <mrow> element
+            var mrowElement = document.createElementNS("http://www.w3.org/1998/Math/MathML", "mrow");
 
-            // Trigger MathJax typesetting for the updated content
-            MathJax.typesetPromise([solutionInput]).catch(function (err) {
-                console.log(err.message);
-            });
+            // Set the MathML code as the content of the <mrow> element
+            mrowElement.innerHTML = mathML;
+
+            // Get the current selection and range
+            var sel = window.getSelection();
+            var range = sel.getRangeAt(0);
+
+            // Insert the <mrow> element into the range
+            range.insertNode(mrowElement);
         }
-
-
-
-
-
-
-
-
-
-
 
         function submitSolution() {
             var userSolution = document.getElementById('solutionInput').innerHTML;
@@ -125,10 +98,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
 <h1>Write Your Solution:</h1>
 <div id="solutionContainer">
-
-    <div id="solutionInput" contenteditable="true">
-        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow id="mainrow"></mrow></math>
-    </div>
+    <div id="solutionInput" style="border: 1px solid #ccc; padding: 5px; width: 300px;" contenteditable="plaintext-only"></div>
     <div id="symbolBox">
         <button class="symbolButton" onclick="addSymbol('+')">+</button>
         <button class="symbolButton" onclick="addSymbol('-')">-</button>
@@ -164,10 +134,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 </style>
 
 <script>
-    // Trigger MathJax typesetting after the page has loaded
-    window.addEventListener('load', function() {
-        MathJax.typeset();
-    });
 </script>
 </body>
 </html>
+
