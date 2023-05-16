@@ -58,8 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <table>
                 <thead>
                 <tr>
-                    <th>Available assignments</th>
                     <th></th>
+                    <th>Available assignments</th>
+                    <th>Max points</th>
+                    <th>From-To</th>
+
                 </tr>
                 </thead>
 
@@ -67,8 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php foreach ($files as $file): ?>
                     <?php if ($file !== '.' && $file !== '..'): ?>
                         <tr>
-                            <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
                             <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
+                            <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
+
+                            <td><input type="number" id="max-points" name="max_points" min="0" max="10"></td>
+                            <td><input type="date" id="from" name="from"> <input type="date" id="to" name="to"></td>
                         </tr>
                     <?php endif; ?>
                 <?php endforeach; ?>
