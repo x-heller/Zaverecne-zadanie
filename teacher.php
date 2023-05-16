@@ -33,6 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // header("Location: success.php");
     // echo "Files inserted successfully!";
     // You can choose to redirect the user to another page or display a success message here
+
+    // Redirect to prevent duplicate form submission
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
 }
 
 ?>
