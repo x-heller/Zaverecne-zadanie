@@ -41,6 +41,8 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             var solutionInput = document.getElementById('solutionInput');
             var symbolText = '';
 
+
+
             // Convert symbols to LaTeX format
             switch (symbol) {
                 case '+':
@@ -78,8 +80,15 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             var sel = window.getSelection();
             var range = sel.getRangeAt(0);
 
+
+            // Remove the unwanted <br> tag if it exists
+            var brElement = solutionInput.querySelector('br');
+            if (brElement) {
+                brElement.parentNode.removeChild(brElement);
+            }
             // Insert the <mrow> element into the range
             range.insertNode(mrowElement);
+
         }
 
         function submitSolution() {

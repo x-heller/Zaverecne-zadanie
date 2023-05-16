@@ -27,5 +27,6 @@ else{
 <div id="buttoncontainer">
 <a id="button" href="logout.php">logout</a>
 <a id="button" href="test/asd.php">generate test</a>
+    <a id="button" href="student_info.php">User guide</a>
 </div>
 </body>
