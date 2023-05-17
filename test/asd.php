@@ -39,9 +39,10 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script type="text/javascript">
 
         function submitSolution() {
-            var userSolution = document.getElementById('solutionInput').innerHTML;
             // Perform solution evaluation here
-            alert('Submitted Solution: ' + userSolution);
+           // mf.executeCommand('selectAll');
+            console.log(mf.getValue());
+           // alert('Submitted Solution: ' + userSolution);
         }
     </script>
     <script defer src="//unpkg.com/mathlive"></script>
@@ -54,7 +55,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 <p><?php echo $randomSolution; ?></p>
 
 <h1>Write Your Solution:</h1>
-<math-field></math-field>
+<math-field id="mf"></math-field>
 
 
 <button id="submitSolution" onclick="submitSolution()">Submit</button>
