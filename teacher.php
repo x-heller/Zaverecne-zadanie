@@ -1,10 +1,8 @@
 <?php
-
 session_start();
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["type"] == "teacher"){
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["type"] == "teacher") {
     //echo "Hello teacher";
-}
-else{
+} else {
     header("location: login.php");
 }
 
@@ -41,6 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($isValid) {
+        // Redirect or display a success message
+        // header("Location: success.php");
+        // echo "Files inserted successfully!";
+        // You can choose to redirect the user to another page or display a success message here
 
         // Redirect to prevent duplicate form submission
         header("Location: ".$_SERVER['PHP_SELF']);
@@ -56,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Teacher</title>
-
     <link rel="stylesheet" href="beauty.css">
     <!--<script>
         function validateForm() {
@@ -75,60 +76,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>-->
 </head>
 <body>
-    <h1 id="title">Teacher portal</h1>
-    <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
+<h1 id="title">Teacher portal</h1>
+<h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
+<div id="tableDiv">
+    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return validateForm()">
+        <?php if (isset($warningMessage)): ?>
+            <div style="background-color: red; color: white"><?php echo $warningMessage; ?></div>
+        <?php endif; ?>
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Available assignments</th>
+                <th>Max points</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+            </thead>
 
-    <div id="buttoncontainer">
-        <a id="button" href="logout.php">Logout</a>
-        <a id="button" href="teacher_info.php">Teacher guide</a>
-    </div>
-
-    <div id="tableDiv">
-        <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-            <?php if (isset($warningMessage)): ?>
-                <div style="background-color: red; color: white;"><?php echo $warningMessage; ?></div>
-            <?php endif; ?>
-            <table>
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Available assignments</th>
-                    <th>Max points</th>
-                    <th>From-To</th>
-
-                </tr>
-                </thead>
-
-                <tbody>
-                <?php foreach ($files as $file): ?>
-                    <?php if ($file !== '.' && $file !== '..'): ?>
-                        <tr>
-                            <?php
-                            $checkboxName = "selected_files[]";
-                            $checkboxValue = $file;
-                            $isChecked = in_array($file, isset($_POST["selected_files"]) ? $_POST["selected_files"] : []);
-                            $maxPointName = "max_points[]";
-                            $maxPointValue = isset($_POST["max_points"][$key]) ? $_POST["max_points"][$key] : "";
-                            $fromName = "from[]";
-                            $fromValue = isset($_POST["from"][$key]) ? $_POST["from"][$key] : "";
-                            $toName = "to[]";
-                            $toValue = isset($_POST["to"][$key]) ? $_POST["to"][$key] : "";
-                            ?>
-                            <td><input type="checkbox" name="<?php echo $checkboxName; ?>" value="<?php echo $checkboxValue; ?>" <?php if ($isChecked) echo 'checked'; ?>></td>
-                            <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
-                            <td><input type="number" id="max-points" name="<?php echo $maxPointName; ?>" min="1" max="10" placeholder="1-10" value="<?php echo $maxPointValue; ?>"></td>
-                            <td>
-                                <input type="date" id="from" name="<?php echo $fromName; ?>" value="<?php echo $fromValue; ?>">
-                                <input type="date" id="to" name="<?php echo $toName; ?>" value="<?php echo $toValue; ?>">
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-            <button type="submit">Save</button>
-        </form>
-    </div>
+            <tbody>
+            <?php foreach ($files as $file): ?>
+                <?php if ($file !== '.' && $file !== '..'): ?>
+                    <tr>
+                        <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
+                        <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
+                        <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
+                        <td><input type="date" id="from" name="from[]"></td>
+                        <td><input type="date" id="to" name="to[]"></td>
+                    </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <button type="submit">Save</button>
+    </form>
+</div>
 </body>
 </html>
-
