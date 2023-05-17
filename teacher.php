@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["type"] == "teacher") {
     //echo "Hello teacher";
@@ -19,32 +21,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $maxPoints = $_POST["max_points"];
     $fromDates = $_POST["from"];
     $toDates = $_POST["to"];
+    // in foreach check all files if they are in selected files array if they are upload them to database
+    $count = 0;
+    foreach ($files as $file) {
+        if ($file !== '.' && $file !== '..') {
+            if (in_array($file, $selectedFiles)) {
+                $fromDate = $fromDates[$count];
+                // If 'from' date is not set, set it to null
+                if ($fromDate == "") {
+                    $fromDate = null;
+                }
+                $toDate = $toDates[$count];
+                // If 'to' date is not set, set it to null
+                if ($toDate == "") {
+                    $toDate = null;
+                }
+                $stmt = $pdo->prepare("INSERT INTO assignments (filename, time_from, time_to, point) VALUES (?, ?, ?, ?)");
+                $stmt->execute([pathinfo($file, PATHINFO_FILENAME), $fromDate, $toDate, $maxPoints[$count]]);
+            }
+            $count++;
+        }
+    }
+
 
 
 
     $isValid = true;
-    foreach ($selectedFiles as $key => $file) {
-        $name = pathinfo($file, PATHINFO_FILENAME);
-        $format = pathinfo($file, PATHINFO_EXTENSION);
-        $filename = $name . "." . $format;
-        echo "key: ",$key;
-        echo "Nazev: ",$filename;
-        $maxPoint = $maxPoints[$key];
-        echo "Rak: ",$maxPoints[$key];
-        $fromDate = !empty($fromDates[$key]) ? $fromDates[$key] : null;
-        $toDate = !empty($toDates[$key]) ? $toDates[$key] : null;
+    //create a foreach for files and check if  selected files are in the array
 
-
-
-
-        /*if (empty($maxPoint)) {
-            $isValid = false;
-            break;
-        }*/
-
-        $stmt = $pdo->prepare("INSERT INTO assignments (filename, point, time_from, time_to) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$filename, $maxPoint, $fromDate, $toDate]);
-    }
 
     header("Location: ".$_SERVER['PHP_SELF']);
     exit();
