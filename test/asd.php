@@ -153,7 +153,7 @@ $connection = null;
                 else {
                     alert("FX!");
                 }}
-            }
+
                 else {
 
 
