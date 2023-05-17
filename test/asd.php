@@ -17,6 +17,13 @@ $solutionArray = $solutions[1];
 // Select a random index
 $randomIndex = array_rand($taskArray);
 
+if (preg_match_all('/\\\\section\*\{(.*?)\}/s', $latexContent, $section) > 0) {
+    $thesection= $section[1][$randomIndex];// Output: B34A5A
+    echo $thesection;
+} else {
+    echo "No section found.";
+}
+
 // Retrieve the randomly selected task and solution
 $randomTask = $taskArray[$randomIndex];
 $randomSolution = $solutionArray[$randomIndex];
@@ -30,6 +37,55 @@ $randomSolution = html_entity_decode($randomSolution, ENT_QUOTES);
 
 // Replace "\dfrac" with fraction markup
 $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
+
+//$solution= $_POST['solution'];
+//echo $solution;
+//$login = $_SESSION['login'];
+
+//
+require_once "../config.php";
+$pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+echo $_GET['filename'];
+try{
+$sql = "SELECT point FROM assignments WHERE filename = :filename";
+$stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':filename', $_GET['filename']);
+
+    // Execute the query
+    $success = $stmt->execute();
+
+    // Check if the query was successful
+    if ($success) {
+        // Check if there are any rows returned
+        if ($stmt->rowCount() > 0) {
+            // Retrieve the points
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $point = $row['point'];
+                // Use the retrieved point as needed (e.g., display, store in a variable, etc.)
+                echo "Point: $point";
+            }
+        } else {
+            echo "No points found for the specified filename.";
+        }
+    } else {
+        // Handle query error
+        $errorInfo = $stmt->errorInfo();
+        echo "Error executing the query: " . $errorInfo[2];
+    }
+} catch (PDOException $e) {
+    // Handle PDOException
+    echo "Error: " . $e->getMessage();
+}
+
+// Close the database connection (if needed)
+$connection = null;
+
+//
+//$sql = "INSERT INTO student (login, answer, points, testid, section) VALUES (:login, :answer, :points, :testid,:section)";
+//$stmt = $pdo->prepare($sql);
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -76,8 +132,20 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
 
 
-            let solution = document.getElementById("mf").getValue();
+            var solution = document.getElementById("mf").getValue();
             console.log(solution);
+
+            // let xhr = new XMLHttpRequest();
+            // xhr.open("POST", "PHP_SELF", true);
+            // xhr.setRequestHeader('Content-Type', 'application/json');
+            // let data ={
+            //     "solution": solution,
+            // }
+            // let dataJson = JSON.stringify(data);
+            // xhr.send(dataJson);
+
+
+
 
             console.log(ce.parse(solution).N().latex);
 
@@ -94,9 +162,15 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             else {
                 alert("FX!");
             }}
-            //POST
-            //upload login, answer,points,testid(filename),section to database
-            //if correct = true, points = 1, else points = 0
+
+            let points = <?php echo json_encode($point) ?>;
+            console.log(points);
+            let login = <?php echo json_encode($_SESSION['login']) ?>;
+            let testid = <?php echo json_encode($_GET['filename']) ?>;
+            let section = <?php echo json_encode($thesection) ?>;
+
+            let urlW = 'summary.php?points=' + points + '&login=' + login + '&testid=' + testid + '&section=' + section + '&solution=' + solution + '&correct=' + correct;
+            window.location.href = urlW;
 
         }
 
