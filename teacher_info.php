@@ -12,14 +12,18 @@ else{
     <meta charset="UTF-8">
     <title>Student portal</title>
     <link rel="stylesheet" href="beauty.css">
+    <script src="download.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
 </head>
 <body>
 <h1 id="title">Infoportal</h1>
 <h3 id="name"><?php echo $_SESSION['fullname']?></h3>
 <div id="buttoncontainer">
     <a id="button" href="logout.php">logout</a>
-    <a id="button" onclick="window.print()">Download as PDF</a>
+    <a id="downloadeng">Download as PDF</a>
+    <a id="downloadsk">Stiahnut ako PDF</a>
 </div>
+<div id="downloade">
 <div id="infocontainer">
     <h2>Funcions a Teacher can use</h2>
     <ul>
@@ -38,8 +42,10 @@ else{
     <h3>View which tasks each student generated, the result and the points</h3>
     <p>The teacher can view which tasks each student generated, the result and the points. The teacher can also view the generated test in PDF format.</p>
 </div>
+</div>
 <br>
 <br>
+<div id="downloads">
 <div id="infocontainer">
     <h2>Funkcionality studenta</h2>
     <ul>
@@ -65,6 +71,7 @@ else{
     <h3>Prezerať, aké úlohy si ktorý študent vygeneroval, vysledok a body</h3>
     <p>Uciteľ si môže prezerať, aké úlohy si ktorý študent vygeneroval, aké odovzdal, odovzdaný výsledok
         spolu s informáciou, či bol správny a koľko získal za ktorú úlohu bodov</p>
+</div>
 </div>
 <br>
 <br>

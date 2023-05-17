@@ -21,10 +21,15 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#button{
+#button, #downloadeng,#downloadsk{
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+#button:hover, #downloadbutton:hover{
+    transform: scale(1.1);
 }
 #buttoncontainer{
     position: absolute;
