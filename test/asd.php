@@ -2,9 +2,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 // Read the content of the LaTeX document
 $filename = "../assignments/" . $_GET['filename'];
-echo $filename;
 $latexContent = file_get_contents($filename);
 // Extract tasks and solutions
 preg_match_all('/\\\\begin{task}(.*?)\\\\end{task}/s', $latexContent, $tasks);
