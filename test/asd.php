@@ -36,14 +36,21 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 <head>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-    <script type="text/javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <script src="//unpkg.com/@cortex-js/compute-engine"></script>
+    <script>
+
+        const ce = new ComputeEngine.ComputeEngine();
+
 
         function submitSolution() {
-            // Perform solution evaluation here
-           // mf.executeCommand('selectAll');
-            console.log(mf.getValue());
-           // alert('Submitted Solution: ' + userSolution);
+            let solution = document.getElementById("mf").getValue();
+            console.log(solution);
+            console.log(ce.parse(solution).N().latex);
         }
+
+        // ➔ "-1"
     </script>
     <script defer src="//unpkg.com/mathlive"></script>
 </head>
