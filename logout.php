@@ -11,5 +11,5 @@ session_unset();
 session_destroy();
 
 // Presmerovanie na hlavnu stranku.
-header("location: register.php");
+header("location: login.php");
 exit;
