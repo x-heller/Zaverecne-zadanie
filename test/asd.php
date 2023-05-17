@@ -48,9 +48,12 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             let solution = document.getElementById("mf").getValue();
             console.log(solution);
             console.log(ce.parse(solution).N().latex);
+
+
+            //POST
+
         }
 
-        // ➔ "-1"
     </script>
     <script defer src="//unpkg.com/mathlive"></script>
 </head>
