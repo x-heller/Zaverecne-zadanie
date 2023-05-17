@@ -4,7 +4,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 // ------- ------- ------- -------
+session_start();
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    if($_SESSION["type"] == "student"){
+        header("location: student.php");
+        exit;
+    }
+    if($_SESSION["type"] == "teacher"){
+        header("location: teacher.php");
+        exit;
+    }
 
+    exit;
+}
 
 // Konfiguracia PDO
 require_once 'config.php';
