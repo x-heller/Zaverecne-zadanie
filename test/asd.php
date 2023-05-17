@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+session_start();
 
 // Read the content of the LaTeX document
 $filename = "../assignments/" . $_GET['filename'];
@@ -10,7 +10,7 @@ $latexContent = file_get_contents($filename);
 preg_match_all('/\\\\begin{task}(.*?)\\\\end{task}/s', $latexContent, $tasks);
 preg_match_all('/\\\\begin{solution}(.*?)\\\\end{solution}/s', $latexContent, $solutions);
 
-// Store tasks and solutions in separate arrays
+
 $taskArray = $tasks[1];
 $solutionArray = $solutions[1];
 
@@ -41,7 +41,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="//unpkg.com/@cortex-js/compute-engine"></script>
     <script>
-
+        let correct = false;
         const ce = new ComputeEngine.ComputeEngine();
         let randomSolution = <?php echo json_encode(preg_replace('/\\\\begin{equation\*}(.*?)\\\\end{equation\*}/s', '$1', $randomSolution)); ?>;
 
@@ -68,6 +68,7 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
                 if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex) || (ce.parse(thirdSide).N().latex === ce.parse(solution).N().latex)){
                     alert("Correct!");
+                    correct = true;
                 }
                 else {
                     alert("FX!");
@@ -88,11 +89,14 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 
             if((ce.parse(randomSolution).N().latex === ce.parse(solution).N().latex)){
                 alert("Correct!");
+                correct = true;
             }
             else {
                 alert("FX!");
             }}
             //POST
+            //upload login, answer,points,testid(filename),section to database
+            //if correct = true, points = 1, else points = 0
 
         }
 

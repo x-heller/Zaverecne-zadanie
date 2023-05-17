@@ -26,6 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($files as $file) {
         if ($file !== '.' && $file !== '..') {
             if (in_array($file, $selectedFiles)) {
+                $name = pathinfo($file, PATHINFO_FILENAME);
+                $format = pathinfo($file, PATHINFO_EXTENSION);
+                $filename = $name . "." . $format;
                 $fromDate = $fromDates[$count];
                 // If 'from' date is not set, set it to null
                 if ($fromDate == "") {
@@ -37,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $toDate = null;
                 }
                 $stmt = $pdo->prepare("INSERT INTO assignments (filename, time_from, time_to, point) VALUES (?, ?, ?, ?)");
-                $stmt->execute([pathinfo($file, PATHINFO_FILENAME), $fromDate, $toDate, $maxPoints[$count]]);
+                $stmt->execute([$filename, $fromDate, $toDate, $maxPoints[$count]]);
             }
             $count++;
         }
