@@ -78,6 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1 id="title">Teacher portal</h1>
     <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 
+    <div id="buttoncontainer">
+        <a id="button" href="logout.php">Logout</a>
+        <a id="button" href="teacher_info.php">Teacher guide</a>
+    </div>
+
     <div id="tableDiv">
         <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
             <?php if (isset($warningMessage)): ?>
@@ -111,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ?>
                             <td><input type="checkbox" name="<?php echo $checkboxName; ?>" value="<?php echo $checkboxValue; ?>" <?php if ($isChecked) echo 'checked'; ?>></td>
                             <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
-                            <td><input type="number" id="max-points" name="<?php echo $maxPointName; ?>" min="0" max="10" value="<?php echo $maxPointValue; ?>"></td>
+                            <td><input type="number" id="max-points" name="<?php echo $maxPointName; ?>" min="1" max="10" placeholder="1-10" value="<?php echo $maxPointValue; ?>"></td>
                             <td>
                                 <input type="date" id="from" name="<?php echo $fromName; ?>" value="<?php echo $fromValue; ?>">
                                 <input type="date" id="to" name="<?php echo $toName; ?>" value="<?php echo $toValue; ?>">

@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 
 session_start();
 
-$_SESSION["loggedin"] = false;
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     if($_SESSION["type"] == "student"){
@@ -66,8 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Nespravne meno alebo heslo.";
         }
-    } else {
-        echo "Ups. Nieco sa pokazilo!";
     }
     unset($stmt);
     unset($pdo);
