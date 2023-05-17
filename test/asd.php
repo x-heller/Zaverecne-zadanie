@@ -103,7 +103,8 @@ $connection = null;
 
         function submitSolution() {
             let filename = <?php echo json_encode($_GET['filename']) ?>;
-            let isOdozva = filename.includes("odozva");
+            let isOdozva = filename.includes("odozva02");
+            let isOdozva2 = filename.includes("odozva01");
             if (isOdozva) {
                 const sides = randomSolution.split('=');
                 const leftSide = sides[0].trim();  // y(t)
@@ -128,7 +129,32 @@ $connection = null;
                 }
                 else {
                     alert("FX!");
-            }} else {
+            }}
+            else if (isOdozva2){
+                const sides = randomSolution.split('=');
+                const leftSide = sides[0].trim();  // y(t)
+                let rightSide = sides[1].trim(); // 0.0833 - 1.5 * e^(-t) + 0.1666 * e^(-3*t) + 0.25 * e^(-4*t)
+
+                let solution = document.getElementById("mf").getValue();
+                console.log(solution);
+
+
+                rightSide = rightSide.trim();
+                //in randomsolution replace \dfrac with /frac
+                rightSide = rightSide.replace(/\\dfrac/g, '\\frac');
+                console.log(rightSide);
+                console.log(ce.parse(rightSide).N().latex);
+                console.log(ce.parse(solution).N().latex);
+
+                if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex){
+                    alert("Correct!");
+                    correct = true;
+                }
+                else {
+                    alert("FX!");
+                }}
+            }
+                else {
 
 
 
