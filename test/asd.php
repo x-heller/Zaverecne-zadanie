@@ -3,8 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Read the content of the LaTeX document
-$latexContent = file_get_contents('./blokovka01pr.tex');
-
+$filename = "../assignments/" . $_GET['filename'];
+echo $filename;
+$latexContent = file_get_contents($filename);
 // Extract tasks and solutions
 preg_match_all('/\\\\begin{task}(.*?)\\\\end{task}/s', $latexContent, $tasks);
 preg_match_all('/\\\\begin{solution}(.*?)\\\\end{solution}/s', $latexContent, $solutions);
@@ -21,7 +22,7 @@ $randomTask = $taskArray[$randomIndex];
 $randomSolution = $solutionArray[$randomIndex];
 
 // Replace LaTeX image inclusion with HTML img tag
-$randomTask = preg_replace('/\\\\includegraphics\{(.*?)\}/', '<img src="../images/$1" alt="Block Diagram">', $randomTask);
+$randomTask = preg_replace('/\\\\includegraphics\{(.*?)\}/', '<img src="../../$1" alt="Block Diagram">', $randomTask);
 
 // Decode LaTeX special characters
 $randomTask = html_entity_decode($randomTask, ENT_QUOTES);
@@ -40,21 +41,26 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="//unpkg.com/@cortex-js/compute-engine"></script>
     <script>
-
         const ce = new ComputeEngine.ComputeEngine();
-
-
+        const randomSolution = <?php echo json_encode(trim(preg_replace('/\\\\begin{equation\*}(.*?)\\\\end{equation\*}/s', '$1', $randomSolution))); ?>;
         function submitSolution() {
+            console.log(randomSolution);
             let solution = document.getElementById("mf").getValue();
             console.log(solution);
             console.log(ce.parse(solution).N().latex);
 
+            // Check if the entered solution matches the randomSolution
+            if (ce.parse(solution).N().latex === randomSolution) {
+                console.log("Entered solution matches the randomSolution");
+            } else {
+                console.log("Entered solution does not match the randomSolution");
+            }
 
-            //POST
-
+            // Perform POST request or further operations with the solution
         }
-
     </script>
+
+
     <script defer src="//unpkg.com/mathlive"></script>
 </head>
 <body>
