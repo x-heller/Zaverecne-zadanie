@@ -146,7 +146,7 @@ $connection = null;
                 console.log(ce.parse(rightSide).N().latex);
                 console.log(ce.parse(solution).N().latex);
 
-                if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex){
+                if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex)){
                     alert("Correct!");
                     correct = true;
                 }
