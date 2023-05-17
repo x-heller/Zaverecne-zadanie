@@ -42,13 +42,19 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
     <script>
 
         const ce = new ComputeEngine.ComputeEngine();
-
+        let randomSolution = <?php echo json_encode(preg_replace('/\\\\begin{equation\*}(.*?)\\\\end{equation\*}/s', '$1', $randomSolution)); ?>;
 
         function submitSolution() {
             let solution = document.getElementById("mf").getValue();
             console.log(solution);
+
             console.log(ce.parse(solution).N().latex);
 
+            randomSolution = randomSolution.trim();
+            //in randomsolution replace \dfrac with /frac
+            randomSolution = randomSolution.replace(/\\dfrac/g, '\\frac');
+            console.log(randomSolution);
+            console.log(ce.parse(randomSolution).N().latex);
 
             //POST
 
