@@ -56,6 +56,13 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
             console.log(randomSolution);
             console.log(ce.parse(randomSolution).N().latex);
 
+
+            if(ce.parse(randomSolution).N().latex === ce.parse(solution).N().latex) {
+                alert("Correct!");
+            }
+            else {
+                alert("FX!");
+            }
             //POST
 
         }
