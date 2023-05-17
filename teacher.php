@@ -20,25 +20,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fromDates = $_POST["from"];
     $toDates = $_POST["to"];
 
+
+
     $isValid = true;
     foreach ($selectedFiles as $key => $file) {
         $name = pathinfo($file, PATHINFO_FILENAME);
         $format = pathinfo($file, PATHINFO_EXTENSION);
         $filename = $name . "." . $format;
+        echo "key: ",$key;
+        echo "Nazev: ",$filename;
         $maxPoint = $maxPoints[$key];
+        echo "Rak: ",$maxPoints[$key];
         $fromDate = !empty($fromDates[$key]) ? $fromDates[$key] : null;
         $toDate = !empty($toDates[$key]) ? $toDates[$key] : null;
 
-        if (empty($maxPoint)) {
+
+
+
+        /*if (empty($maxPoint)) {
             $isValid = false;
             break;
-        }
+        }*/
 
         $stmt = $pdo->prepare("INSERT INTO assignments (filename, point, time_from, time_to) VALUES (?, ?, ?, ?)");
         $stmt->execute([$filename, $maxPoint, $fromDate, $toDate]);
     }
 
-    if ($isValid) {
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+    /*if ($isValid) {
         // Redirect or display a success message
         // header("Location: success.php");
         // echo "Files inserted successfully!";
@@ -49,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         $warningMessage = "Please provide maximum points for all checked assignments.";
-    }
+    }*/
 }
 ?>
 
@@ -59,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Teacher</title>
     <link rel="stylesheet" href="beauty.css">
-    <!--<script>
+    <script>
         function validateForm() {
             var checkboxes = document.getElementsByName("selected_files[]");
             var maxPoints = document.getElementsByName("max_points[]");
@@ -73,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             return true;
         }
-    </script>-->
+    </script>
 </head>
 <body>
 <h1 id="title">Teacher portal</h1>
