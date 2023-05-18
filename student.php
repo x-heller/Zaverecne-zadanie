@@ -12,6 +12,10 @@
     <a id="button" href="logout.php">logout</a>
     <a id="button" href="student_info.php">User guide</a>
     <style>
+        html, body {
+            background-color: #f4f4f4;
+            font-family: Calibri, monospace;
+        }
         #table{
             display: flex;
             flex-direction: column;
@@ -22,8 +26,10 @@
             margin: auto;
         }
         tbody{
-            border: 5px solid #e5e5e5;
+            border: 5px solid white;
             border-radius: 10px;
+            background: white;
+            box-shadow: 0 1px 2px 1px #ddd;
         }
     </style>
 </div>
