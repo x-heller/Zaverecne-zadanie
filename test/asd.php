@@ -19,7 +19,7 @@ $randomIndex = array_rand($taskArray);
 
 if (preg_match_all('/\\\\section\*\{(.*?)\}/s', $latexContent, $section) > 0) {
     $thesection= $section[1][$randomIndex];// Output: B34A5A
-    echo $thesection;
+    //echo $thesection;
 } else {
     echo "No section found.";
 }
@@ -67,7 +67,7 @@ if ($success) {
 
     if ($success) {
         // Insertion successful
-        echo "Data inserted successfully.";
+        //echo "Data inserted successfully.";
     } else {
         // Insertion failed
         $errorInfo = $stmt->errorInfo();
@@ -77,7 +77,7 @@ if ($success) {
     // SELECT query failed
     $errorInfo = $stmt->errorInfo();
     echo "Error retrieving user data: " . $errorInfo[2];
-}echo $_GET['filename'];
+}//echo $_GET['filename'];
 try{
 $sql = "SELECT point FROM assignments WHERE filename = :filename";
 $stmt = $pdo->prepare($sql);
@@ -94,7 +94,7 @@ $stmt = $pdo->prepare($sql);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $point = $row['point'];
                 // Use the retrieved point as needed (e.g., display, store in a variable, etc.)
-                echo "Point: $point";
+                //echo "Point: $point";
             }
         } else {
             echo "No points found for the specified filename.";
@@ -128,6 +128,13 @@ $connection = null;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="//unpkg.com/@cortex-js/compute-engine"></script>
+    <style>
+        #mf{
+            min-width: 200px;
+            min-height: 50px;
+            font-size: 30px;
+        }
+    </style>
     <script>
         let correct = false;
         const ce = new ComputeEngine.ComputeEngine();
@@ -239,11 +246,11 @@ $connection = null;
     <script defer src="//unpkg.com/mathlive"></script>
 </head>
 <body>
-<h1>Random Task:</h1>
+<h1>Your task is || Vaša úloha je:</h1>
 <p><?php echo $randomTask; ?></p>
 
-<h1>Random Solution:</h1>
-<p><?php echo $randomSolution; ?></p>
+<!--<h1>Random Solution:</h1>-->
+<!--<p>--><?php //echo $randomSolution; ?><!--</p>-->
 
 <h1>Write Your Solution:</h1>
 <math-field id="mf"></math-field>

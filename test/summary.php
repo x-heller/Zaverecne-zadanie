@@ -69,16 +69,16 @@ $stmt->execute();
     <div class="row1">
         <div class="col-12">
             <h3 class="name"><?php echo $login?></h3>
-            <h1 class="stitle">Test Complete || Test bol odoslaný</h1>
-            <h3 class="bigtitle">Points gained || Body získané</h3>
+            <h1 class="stitle">Test Complete - Test bol odoslaný</h1>
+            <h3 class="bigtitle">Points gained - Body získané</h3>
             <p class="textt"><?php echo $pointsgained; ?>/<?php echo $points;?></p>
-            <h3 class="bigtitle">Test Summary || Podrobnosti</h3>
-            <p class="title">Test ID || Čislo testu</p>
+            <h3 class="bigtitle">Test Summary - Podrobnosti</h3>
+            <p class="title">Test ID - Čislo testu</p>
             <p class="textt"><?php echo $testid;?></p>
-            <p class="title">Section ID || Čislo príkladu</p>
+            <p class="title">Section ID - Čislo príkladu</p>
             <p class="textt"><?php echo $section;?></p>
 
-            <h3 class="bigtitle">Your answer was || Vas odpoveď bol</h3>
+            <h3 class="bigtitle">Your answer was - Vas odpoveď bol</h3>
             <math-field id="mf1" readonly="true" ><?php echo $solution;?></math-field>
 
 
