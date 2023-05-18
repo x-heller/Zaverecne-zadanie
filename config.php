@@ -1,9 +1,8 @@
 <?php
 
 $hostname = "localhost";
-$username = "xcsoka";
-$password = "MbSXRvfa2MlFM00";
+$username = "xbukris";
+$password = "CclQNssGHkNaPul";
 $dbname = "zaverecne";
-
 
 ?>

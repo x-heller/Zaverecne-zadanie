@@ -36,28 +36,32 @@ $stmt->execute();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="//unpkg.com/@cortex-js/compute-engine"></script>
+    <script defer src="//unpkg.com/mathlive"></script>
 </head>
 <body>
+
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h3><?php echo $login?></h3>
-            <h1>Test Complete || Test bol odoslaný</h1>
-            <h3>Points gained || Body získané</h3>
-            <p><?php echo $pointsgained; ?>/<?php echo $points;?></p>
-            <h3>Test Summary || Podrobnosti</h3>
+            <h3 class="name"><?php echo $login?></h3>
+            <h1 class="stitle">Test Complete || Test bol odoslaný</h1>
+            <h3 class="bigtitle">Points gained || Body získané</h3>
+            <p class="textt"><?php echo $pointsgained; ?>/<?php echo $points;?></p>
+            <h3 class="bigtitle">Test Summary || Podrobnosti</h3>
             <p class="title">Test ID || Čislo testu</p>
-            <p><?php echo $testid;?></p>
+            <p class="textt"><?php echo $testid;?></p>
             <p class="title">Section ID || Čislo príkladu</p>
-            <p><?php echo $section;?></p>
+            <p class="textt"><?php echo $section;?></p>
 
-            <h3>Your answer was || Vas odpoveď bol</h3>
-            <math-field id="mf"><?php echo $solution;?></math-field>
+            <h3 class="bigtitle">Your answer was || Vas odpoveď bol</h3>
+            <math-field id="mf1" readonly="true" ><?php echo $solution;?></math-field>
 
 
-
-            <a id="button" href="../logout.php">Odhlásiť sa</a>
-            <a id="button" href="../student.php" >Späť na testy</a>
+            <br>
+            <div class="buttoncontainer2">
+                <a id="button" href="../logout.php">Odhlásiť sa</a>
+                <a id="button" href="../student.php" >Späť na testy</a>
+            </div>
         </div>
     </div>
 </div>
