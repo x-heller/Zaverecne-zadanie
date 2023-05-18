@@ -100,7 +100,7 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <h3 id="name"><?= $_SESSION["fullname"] ?></h3>
 <div id="buttoncontainer">
     <a id="button" class="butt" href="#" onclick="downloadCSV()">Download Table Content as CSV</a>
-    <a id="button" class="butt" href="logout.php">logout</a>
+    <a id="button" class="butt" href="logout.php">Logout</a>
     <a id="button" class="butt" href="teacher_info.php">User guide</a>
     <a id="button" class="butt" href="teacher.php">Back</a>
 </div>

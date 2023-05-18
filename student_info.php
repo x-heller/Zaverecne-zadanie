@@ -19,7 +19,7 @@ else{
 <h1 id="title">Infoportal</h1>
 <h3 id="name"><?php echo $_SESSION['fullname']?></h3>
 <div id="buttoncontainer">
-    <a id="button" href="logout.php">logout</a>
+    <a id="button" href="logout.php">Logout</a>
     <a id="downloadeng">Download as PDF</a>
     <a id="downloadsk">Stiahnut ako PDF</a>
     <a id="button" href="student.php">Back</a>
