@@ -104,7 +104,7 @@ foreach ($pdo->query($sql) as $row) {
     if($stmt->rowCount() > 0){
         echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'>Completed, points: $points</td></tr>";
     }
-    else{
+    else if($stmt->rowCount() == 0 && $row['time_from'] == null && $row['time_to'] == null){
 
 
         echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'><a href='/zaverecne/test/asd.php?filename=".$row['filename']."'>Generate</a></td></tr>";
