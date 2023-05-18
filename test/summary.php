@@ -1,9 +1,10 @@
 <?php
 //error check
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
+$fullname = $_SESSION['fullname'];
 $login = $_GET['login'];
 $points = $_GET['points'];
 $testid = $_GET['testid'];
@@ -68,7 +69,7 @@ $stmt->execute();
 <div class="container">
     <div class="row1">
         <div class="col-12">
-            <h3 class="name"><?php echo $login?></h3>
+            <h3 class="name"><?php echo $fullname?></h3>
             <h1 class="stitle">Test Complete - Test bol odoslaný</h1>
             <h3 class="bigtitle">Points gained - Body získané</h3>
             <p class="textt"><?php echo $pointsgained; ?>/<?php echo $points;?></p>

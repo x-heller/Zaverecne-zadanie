@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +9,7 @@
 </head>
 <body>
 <h1 id="title">Student portal</h1>
-<h3 id="name"><?php echo $_SESSION['fullname']?></h3>
+<h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 <div id="buttoncontainer">
     <a id="button" href="logout.php">logout</a>
     <a id="button" href="student_info.php">User guide</a>
@@ -42,7 +44,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-session_start();
 require_once "config.php";
 $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 
