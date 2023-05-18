@@ -14,8 +14,15 @@ require_once "config.php";
 $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $stmt = $pdo->prepare("TRUNCATE TABLE assignments");
     $stmt->execute();
+    //if there are no selected files, dont do nothing
+    if (!isset($_POST["selected_files"])) {
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit();
+    }
+    else{
 
     $selectedFiles = $_POST["selected_files"];
     $maxPoints = $_POST["max_points"];
@@ -67,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $warningMessage = "Please provide maximum points for all checked assignments.";
     }*/
-}
+}}
 ?>
 
 <!DOCTYPE html>
