@@ -144,7 +144,7 @@ $connection = null;
                 const leftSide = sides[0].trim();  // y(t)
                 let rightSide = sides[1].trim(); // 0.0833 - 1.5 * e^(-t) + 0.1666 * e^(-3*t) + 0.25 * e^(-4*t)
                 let thirdSide = sides[2].trim(); // 0.0833 - 1.5 * e^(-t) + 0.1666 * e^(-3*t) + 0.25 * e^(-4*t)
-                let solution = document.getElementById("mf").getValue();
+                var solution = document.getElementById("mf").getValue();
                 console.log(solution);
 
 
@@ -169,7 +169,7 @@ $connection = null;
                 const leftSide = sides[0].trim();  // y(t)
                 let rightSide = sides[1].trim(); // 0.0833 - 1.5 * e^(-t) + 0.1666 * e^(-3*t) + 0.25 * e^(-4*t)
 
-                let solution = document.getElementById("mf").getValue();
+                var solution = document.getElementById("mf").getValue();
                 console.log(solution);
 
 
