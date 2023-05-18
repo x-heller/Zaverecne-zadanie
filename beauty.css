@@ -139,6 +139,11 @@ li{
     text-align: center;
     margin: auto;
     justify-content: center;
+    background: white;
+    border-radius: 10px;
+    border: white solid 5px;
+    box-shadow: 0 2px 3px 2px #ddd;
+    padding-bottom: 20px;
 }
 td, th{
     padding: 20px;
@@ -148,4 +153,20 @@ td, th{
 }
 #asName{
     width: 500px
+}
+
+#faszgomb{
+    all: unset;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px 2px #ddd;
 }

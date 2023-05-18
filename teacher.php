@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endforeach; ?>
             </tbody>
         </table>
-        <button type="submit">Save</button>
+        <button id="faszgomb" type="submit">Save</button>
     </form>
 </div>
 </body>
