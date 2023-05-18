@@ -2,7 +2,10 @@
     margin: 0;
     padding: 0;
     /*border: red dashed 1px;*/
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+html, body {
+    background-color: #f4f4f4;
+    font-family: Calibri, monospace;
 }
 
 #name{
@@ -14,7 +17,7 @@
     margin-bottom: 20px;
 }
 #title{
-    color: blue;
+    color: #9090e3;
     font-size: 60px;
     font-weight: bold;
     text-align: center;
@@ -103,11 +106,12 @@ a{
     justify-content: center;
     padding: 20px;
     border-radius: 10px;
-    border: #e5e5e5 solid 5px;
+    border: white solid 5px;
+    box-shadow: 0 2px 3px 2px #ddd;
 }
 
 #infocontainer{
-    border: #e5e5e5 solid 1px;
+    border: white solid 1px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -117,7 +121,7 @@ a{
     margin: auto;
     justify-content: center;
     padding: 20px;
-    background: #e5e5e5;
+    background: white;
 }
 li{
     list-style-type: none;

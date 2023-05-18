@@ -122,7 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $login = $_POST['login'];
         $type = $_POST['type'];
         $hashed_password = password_hash($_POST['password'], PASSWORD_ARGON2ID);
-        echo $type;
 
         // Bind parametrov do SQL
         $stmt = $pdo->prepare($sql);
@@ -229,8 +228,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </label>
                 <br>
                 <button  style="box-shadow: 0 1px 2px 1px #ddd;color: #ffffff;background-color: #3993f0;" class="btn btn-sm btn-google btn-block text-uppercase btn-outline my-btn" type="submit">Vytvorit konto</button>
+                <button  style="box-shadow: 0 1px 2px 1px #ddd;color: #ffffff;background-color: #3993f0;" onclick="location.href='login.php'" class="btn btn-sm btn-google btn-block text-uppercase btn-outline my-btn" type="button">Login</button>
             </form>
         </div>
-
+    </script>
     </body>
 </html>

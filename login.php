@@ -90,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             html, body {
                 background-color: #f4f4f4;
                 font-family: Calibri, monospace;
-
             }
 
             .my-btn {
@@ -104,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 background-color: rgb(255, 255, 255);
                 border-radius: 10px;
                 box-shadow: 0 1px 2px 1px #ddd;
-
             }
 
         </style>

@@ -136,8 +136,8 @@ $connection = null;
             margin: 20px;
         }
         #mf{
-            width: 200px;
-            height: 50px;
+            min-width: 200px;
+            min-height: 50px;
             font-size: 30px;
             margin: 0 auto;
             display: block;

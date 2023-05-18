@@ -41,6 +41,10 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <script defer src="//unpkg.com/mathlive"></script>
 
     <style>
+        html, body {
+            background-color: #f4f4f4;
+            font-family: Calibri, monospace;
+        }
         .headerTR th {
             border-bottom: black solid 1px;
             border-right: black solid 1px;
@@ -51,13 +55,40 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         }
 
 
-        td.last,
-        th.last {
+        th.last{
             border-right: none;
         }
+        td.last{
+            border-right: none;
+        }
+
         .resultTable td{
             height: 40px;
             border-right: black solid 1px;
+        }
+        .tableDiv{
+            width: 80%;
+            margin: auto;
+            border: white solid 1px;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 1px 2px 1px #ddd;
+        }
+        .butt{
+            text-decoration: none;
+            line-height: 50px;
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+        }
+        .butt:hover{
+            text-decoration: none;
+            color: white;
+        }
+        #mf{
+            background: white;
+            border:none;
         }
     </style>
 </head>
@@ -65,9 +96,9 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <h1 id="title">Teacher portal</h1>
 <h3 id="name"><?= $_SESSION["fullname"] ?></h3>
 <div id="buttoncontainer">
-    <a id="button" href="logout.php">logout</a>
-    <a id="button" href="teacher_info.php">User guide</a>
-    <a id="button" href="teacher.php">Back</a>
+    <a id="button" class="butt" href="logout.php">logout</a>
+    <a id="button" class="butt" href="teacher_info.php">User guide</a>
+    <a id="button" class="butt" href="teacher.php">Back</a>
 </div>
 
 <br>
@@ -159,7 +190,7 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 $imageSrc = $failed;
             }
-            $lastCol = "<td class='last'><img src='$imageSrc' style='width: 25px'></td>";
+            $lastCol = "<td class='last' style='border-right: none'><img src='$imageSrc' style='width: 25px'></td>";
 
             $solution = $student["answer"];
             echo "<tr class='tableTR, resultTable'>";
