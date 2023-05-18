@@ -212,12 +212,13 @@ $connection = null;
                 console.log(ce.parse(solution).N().latex);
 
                 if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex) || (ce.parse(thirdSide).N().latex === ce.parse(solution).N().latex)){
-                    alert("Correct!");
+                    // alert("Correct!");
                     correct = true;
                 }
-                else {
-                    alert("FX!");
-            }}
+            //     else {
+            //         alert("FX!");
+            // }
+            }
             else if (isOdozva2){
                 const sides = randomSolution.split('=');
                 const leftSide = sides[0].trim();  // y(t)
@@ -235,12 +236,13 @@ $connection = null;
                 console.log(ce.parse(solution).N().latex);
 
                 if((ce.parse(rightSide).N().latex === ce.parse(solution).N().latex)){
-                    alert("Correct!");
+                    // alert("Correct!");
                     correct = true;
                 }
-                else {
-                    alert("FX!");
-                }}
+                // else {
+                //     alert("FX!");
+                // }
+            }
 
                 else {
 
@@ -270,12 +272,13 @@ $connection = null;
             console.log(ce.parse(randomSolution).N().latex);
 
             if((ce.parse(randomSolution).N().latex === ce.parse(solution).N().latex)){
-                alert("Correct!");
+                // alert("Correct!");
                 correct = true;
             }
-            else {
-                alert("FX!");
-            }}
+            // else {
+            //     alert("FX!");
+            // }
+                }
 
             let points = <?php echo json_encode($point) ?>;
             console.log(points);
