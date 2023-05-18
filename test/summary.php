@@ -23,21 +23,22 @@ $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
 //check which user sent the test and add +1 to the number of tests sent
 $sql = "SELECT * FROM users WHERE login = :login";
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':login', $login);
+$stmt->bindParam(':login', $_SESSION['login']);
 $success = $stmt->execute();
+
 if ($success) {
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $id = $row['id'];
-            $tests_sent = $row['odovzdanie'];
-            $tests_sent = intval($tests_sent) + 1;
-            $sql = "UPDATE users SET odovzdanie = :tests_sent WHERE id = :id";
-            $stmt2 = $pdo->prepare($sql);
-            $stmt2->bindParam(':tests_sent', $tests_sent);
-            $stmt2->bindParam(':id', $id);
-            $success = $stmt2->execute();
-        }
-    }
+    // Retrieve the filename and section
+
+    // Assuming you have defined $thesection elsewhere
+
+    // Insert query
+    $sql = "INSERT INTO odovzdane (testname, section, login) VALUES (:filename, :section, :login)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':filename', $testid);
+    $stmt->bindParam(':section', $section);
+    $stmt->bindParam(':login', $_SESSION['login']);
+
+    $success = $stmt->execute();
 }
 
 $sql = "INSERT INTO student (login, answer, points, testid, section) VALUES (:login, :answer, :points, :testid,:section)";

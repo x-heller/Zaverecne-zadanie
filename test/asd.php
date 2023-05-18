@@ -50,21 +50,34 @@ $sql = "SELECT * FROM users WHERE login = :login";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':login', $_SESSION['login']);
 $success = $stmt->execute();
+
 if ($success) {
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $id = $row['id'];
-            $tests_generated = $row['generate'];
-            $tests_generated = $tests_generated + 1;
-            $sql = "UPDATE users SET generate = :tests_generated WHERE id = :id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':tests_generated', $tests_generated);
-            $stmt->bindParam(':id', $id);
-            $success = $stmt->execute();
-        }
+    // Retrieve the filename and section
+    $filename = $_GET['filename'];
+    $section = $thesection; // Assuming you have defined $thesection elsewhere
+
+    // Insert query
+    $sql = "INSERT INTO generate (testname, section, login) VALUES (:filename, :section, :login)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':filename', $filename);
+    $stmt->bindParam(':section', $section);
+    $stmt->bindParam(':login', $_SESSION['login']);
+
+    $success = $stmt->execute();
+
+    if ($success) {
+        // Insertion successful
+        echo "Data inserted successfully.";
+    } else {
+        // Insertion failed
+        $errorInfo = $stmt->errorInfo();
+        echo "Error inserting data: " . $errorInfo[2];
     }
-}
-echo $_GET['filename'];
+} else {
+    // SELECT query failed
+    $errorInfo = $stmt->errorInfo();
+    echo "Error retrieving user data: " . $errorInfo[2];
+}echo $_GET['filename'];
 try{
 $sql = "SELECT point FROM assignments WHERE filename = :filename";
 $stmt = $pdo->prepare($sql);
@@ -121,6 +134,8 @@ $connection = null;
         let randomSolution = <?php echo json_encode(preg_replace('/\\\\begin{equation\*}(.*?)\\\\end{equation\*}/s', '$1', $randomSolution)); ?>;
 
         function submitSolution() {
+            // check which user submitted the test and add filename section and login to odovzdane table
+
             let filename = <?php echo json_encode($_GET['filename']) ?>;
             let isOdozva = filename.includes("odozva02");
             let isOdozva2 = filename.includes("odozva01");
