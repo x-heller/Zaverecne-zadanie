@@ -77,16 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Teacher</title>
     <link rel="stylesheet" href="beauty.css">
 
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
- -->   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
--->    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
-
     <script>
         function validateForm() {
             var checkboxes = document.getElementsByName("selected_files[]");
@@ -106,18 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementsByTagName('td').st
     </script>
 
-    <style>
-        .headerTR th{
-            border-bottom: black solid 1px;
-            border-right: black solid 1px;
-        }
-        .tableTR td{
-            border-right: black solid 1px;
-        }
-        td.last, th.last{
-            border-right: none;
-        }
-    </style>
 </head>
 <body>
 <h1 id="title">Teacher portal</h1>
@@ -125,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div id="buttoncontainer">
     <a id="button" href="logout.php">logout</a>
     <a id="button" href="teacher_info.php">User guide</a>
+    <a id="button" href="studentCheck.php">Check Students</a>
 </div>
 <div id="tableDiv">
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return validateForm()">
@@ -134,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="warning" style="background-color: red; color: white"></div>
         <table>
             <thead>
-            <tr class="headerTR">
+            <tr>
                 <th></th>
                 <th>Available assignments</th>
                 <th>Max points</th>
@@ -146,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tbody>
             <?php foreach ($files as $file): ?>
                 <?php if ($file !== '.' && $file !== '..'): ?>
-                    <tr class="tableTR">
+                    <tr>
                         <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
                         <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
                         <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
@@ -160,40 +139,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit">Save</button>
     </form>
 </div>
-
-<div id="tableDiv">
-    <!--class="table table-bordered table-striped  table-hover"-->
-    <table>
-        <thead>
-        <tr class="headerTR">
-            <th>Username</th>
-            <th>Answer</th>
-            <th>Point</th>
-            <th>Test ID</th>
-            <th class="last">Section</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <?php /*foreach ($files as $file): */?><!--
-            <?php /*if ($file !== '.' && $file !== '..'): */?>
-                <tr class="tableTR">
-                    <td><input type="checkbox" name="selected_files[]" value="<?php /*echo $file; */?>"></td>
-                    <td id="asName"><?php /*echo pathinfo($file, PATHINFO_FILENAME); */?></td>
-                    <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
-                    <td><input type="date" id="from" name="from[]"></td>
-                    <td class="last"><input type="date" id="to" name="to[]"></td>
-                </tr>
-            <?php /*endif; */?>
-        --><?php /*endforeach; */?>
-        </tbody>
-    </table>
-</div>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('table').DataTable();
-    });
-</script>
 </body>
 </html>
