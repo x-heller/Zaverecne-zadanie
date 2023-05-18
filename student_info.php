@@ -22,6 +22,7 @@ else{
     <a id="button" href="logout.php">logout</a>
     <a id="downloadeng">Download as PDF</a>
     <a id="downloadsk">Stiahnut ako PDF</a>
+    <a id="button" href="student.php">Back</a>
 </div>
 <div id="downloade">
     <div id="infocontainer">
