@@ -61,13 +61,8 @@
     margin-bottom: 20px;
 }
 #mf1{
-
     border: none;
-    position: absolute;
-    top: 66%;
     justify-content: center;
-    left: 50%;
-    text-align: center;
 }
 
 .name{

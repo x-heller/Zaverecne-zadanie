@@ -10,9 +10,7 @@
 <h3 id="name"><?php echo $_SESSION['fullname']?></h3>
 <div id="buttoncontainer">
     <a id="button" href="logout.php">logout</a>
-    <a id="button" href="test/asd.php">generate test</a>
     <a id="button" href="student_info.php">User guide</a>
-
     <style>
         #table{
             display: flex;
