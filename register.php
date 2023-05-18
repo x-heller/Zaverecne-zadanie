@@ -227,7 +227,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     Teacher
 
                 </label>
-
                 <br>
                 <button  style="box-shadow: 0 1px 2px 1px #ddd;color: #ffffff;background-color: #3993f0;" class="btn btn-sm btn-google btn-block text-uppercase btn-outline my-btn" type="submit">Vytvorit konto</button>
             </form>
