@@ -85,8 +85,7 @@
 
 a{
     text-decoration: none;
-    width: 150px;
-    height: 200px;
+
     line-height: 50px;
     background-color: #000000;
     color: white;
@@ -101,7 +100,7 @@ a{
 .container{
     margin-top: 3%;
 }
-.row{
+.row1{
     display: flex;
     flex-direction: column;
     width: 80%;
