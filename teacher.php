@@ -102,11 +102,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             return true;
         }
+
+        document.getElementsByTagName('td').st
     </script>
+
+    <style>
+        .headerTR th{
+            border-bottom: black solid 1px;
+            border-right: black solid 1px;
+        }
+        .tableTR td{
+            border-right: black solid 1px;
+        }
+        td.last, th.last{
+            border-right: none;
+        }
+    </style>
 </head>
 <body>
 <h1 id="title">Teacher portal</h1>
 <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
+<div id="buttoncontainer">
+    <a id="button" href="logout.php">logout</a>
+    <a id="button" href="teacher_info.php">User guide</a>
+</div>
 <div id="tableDiv">
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return validateForm()">
         <?php /*if (isset($warningMessage)): */?><!--
@@ -115,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div id="warning" style="background-color: red; color: white"></div>
         <table>
             <thead>
-            <tr>
+            <tr class="headerTR">
                 <th></th>
                 <th>Available assignments</th>
                 <th>Max points</th>
@@ -127,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tbody>
             <?php foreach ($files as $file): ?>
                 <?php if ($file !== '.' && $file !== '..'): ?>
-                    <tr>
+                    <tr class="tableTR">
                         <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
                         <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
                         <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
@@ -143,29 +162,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <div id="tableDiv">
-    <table class="table table-bordered table-striped  table-hover">
+    <!--class="table table-bordered table-striped  table-hover"-->
+    <table>
         <thead>
-        <tr>
-            <th></th>
-            <th>Available assignments</th>
-            <th>Max points</th>
-            <th>From</th>
-            <th>To</th>
+        <tr class="headerTR">
+            <th>Username</th>
+            <th>Answer</th>
+            <th>Point</th>
+            <th>Test ID</th>
+            <th class="last">Section</th>
         </tr>
         </thead>
 
         <tbody>
-        <?php foreach ($files as $file): ?>
-            <?php if ($file !== '.' && $file !== '..'): ?>
-                <tr>
-                    <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
-                    <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
+        <?php /*foreach ($files as $file): */?><!--
+            <?php /*if ($file !== '.' && $file !== '..'): */?>
+                <tr class="tableTR">
+                    <td><input type="checkbox" name="selected_files[]" value="<?php /*echo $file; */?>"></td>
+                    <td id="asName"><?php /*echo pathinfo($file, PATHINFO_FILENAME); */?></td>
                     <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
                     <td><input type="date" id="from" name="from[]"></td>
-                    <td><input type="date" id="to" name="to[]"></td>
+                    <td class="last"><input type="date" id="to" name="to[]"></td>
                 </tr>
-            <?php endif; ?>
-        <?php endforeach; ?>
+            <?php /*endif; */?>
+        --><?php /*endforeach; */?>
         </tbody>
     </table>
 </div>
