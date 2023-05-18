@@ -93,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (checkboxes[i].checked && maxPoints[i].value === "") {
                     //alert("Please provide maximum points for all checked assignments.");
                     document.getElementById("warning").innerHTML = "Please provide maximum points for all checked assignments.";
+                    document.getElementById("warning").style.borderRadius = "25px";
                     return false;
                 }
             }
