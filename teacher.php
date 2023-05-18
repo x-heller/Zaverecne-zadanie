@@ -76,6 +76,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Teacher</title>
     <link rel="stylesheet" href="beauty.css">
+
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+ -->   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+-->    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
     <script>
         function validateForm() {
             var checkboxes = document.getElementsByName("selected_files[]");
@@ -83,7 +94,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked && maxPoints[i].value === "") {
-                    alert("Please provide maximum points for all checked assignments.");
+                    //alert("Please provide maximum points for all checked assignments.");
+                    document.getElementById("warning").innerHTML = "Please provide maximum points for all checked assignments.";
                     return false;
                 }
             }
@@ -97,9 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 <div id="tableDiv">
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>" onsubmit="return validateForm()">
-        <?php if (isset($warningMessage)): ?>
-            <div style="background-color: red; color: white"><?php echo $warningMessage; ?></div>
-        <?php endif; ?>
+        <?php /*if (isset($warningMessage)): */?><!--
+            <div style="background-color: red; color: white"><?php /*echo $warningMessage; */?></div>
+        --><?php /*endif; */?>
+        <div id="warning" style="background-color: red; color: white"></div>
         <table>
             <thead>
             <tr>
@@ -128,5 +141,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit">Save</button>
     </form>
 </div>
+
+<div id="tableDiv">
+    <table class="table table-bordered table-striped  table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Available assignments</th>
+            <th>Max points</th>
+            <th>From</th>
+            <th>To</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php foreach ($files as $file): ?>
+            <?php if ($file !== '.' && $file !== '..'): ?>
+                <tr>
+                    <td><input type="checkbox" name="selected_files[]" value="<?php echo $file; ?>"></td>
+                    <td id="asName"><?php echo pathinfo($file, PATHINFO_FILENAME); ?></td>
+                    <td><input type="number" id="max-points" name="max_points[]" min="0" max="10"></td>
+                    <td><input type="date" id="from" name="from[]"></td>
+                    <td><input type="date" id="to" name="to[]"></td>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('table').DataTable();
+    });
+</script>
 </body>
 </html>
