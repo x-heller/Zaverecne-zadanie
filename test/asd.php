@@ -45,6 +45,25 @@ $randomTask = preg_replace('/\$(.*?)\$/s', '<span>\($1\)</span>', $randomTask);
 //
 require_once "../config.php";
 $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+//check which user generated the test and add +1 to the number of tests generated
+$sql = "SELECT * FROM users WHERE login = :login";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':login', $_SESSION['login']);
+$success = $stmt->execute();
+if ($success) {
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $id = $row['id'];
+            $tests_generated = $row['generate'];
+            $tests_generated = $tests_generated + 1;
+            $sql = "UPDATE users SET generate = :tests_generated WHERE id = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':tests_generated', $tests_generated);
+            $stmt->bindParam(':id', $id);
+            $success = $stmt->execute();
+        }
+    }
+}
 echo $_GET['filename'];
 try{
 $sql = "SELECT point FROM assignments WHERE filename = :filename";
