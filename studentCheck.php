@@ -40,6 +40,9 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script defer src="//unpkg.com/mathlive"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="csvDownload.js"></script>
+
     <style>
         html, body {
             background-color: #f4f4f4;
@@ -96,6 +99,7 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <h1 id="title">Teacher portal</h1>
 <h3 id="name"><?= $_SESSION["fullname"] ?></h3>
 <div id="buttoncontainer">
+    <a id="button" class="butt" href="#" onclick="downloadCSV()">Download Table Content as CSV</a>
     <a id="button" class="butt" href="logout.php">logout</a>
     <a id="button" class="butt" href="teacher_info.php">User guide</a>
     <a id="button" class="butt" href="teacher.php">Back</a>
@@ -103,7 +107,7 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 <br>
 <div class="tableDiv">
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
         <tr class="headerTR">
             <th>Meno a priezvisko</th>
