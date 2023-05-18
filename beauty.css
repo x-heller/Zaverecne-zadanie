@@ -36,6 +36,52 @@
     top:2%;
     right: 2%;
 }
+
+.bigtitle{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.title{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.stitle{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.textt{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#mf1{
+    border: none;
+    position: absolute;
+    top: 66%;
+    justify-content: center;
+    left: 50%;
+    text-align: center;
+}
+
+.name{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.buttoncontainer2{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 a{
     text-decoration: none;
     width: 150px;
@@ -49,6 +95,22 @@ a{
     border-radius: 10px;
     padding: 10px;
 
+}
+
+.container{
+    margin-top: 3%;
+}
+.row{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: #e5e5e5 solid 5px;
 }
 
 #infocontainer{
@@ -69,6 +131,8 @@ li{
     margin: auto;
     justify-content: center;
 }
+
+
 
 #tableDiv{
     display: flex;
