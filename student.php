@@ -11,7 +11,7 @@ session_start();
 <h1 id="title">Student portal</h1>
 <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 <div id="buttoncontainer">
-    <a id="button" href="logout.php">logout</a>
+    <a id="button" href="logout.php">Logout</a>
     <a id="button" href="student_info.php">User guide</a>
     <style>
         html, body {

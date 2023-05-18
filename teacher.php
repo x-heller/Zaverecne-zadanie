@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h1 id="title">Teacher portal</h1>
 <h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
 <div id="buttoncontainer">
-    <a id="button" href="logout.php">logout</a>
+    <a id="button" href="logout.php">Logout</a>
     <a id="button" href="teacher_info.php">User guide</a>
     <a id="button" href="studentCheck.php">Check Students</a>
 </div>
