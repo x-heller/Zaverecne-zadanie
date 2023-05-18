@@ -12,6 +12,22 @@
     <a id="button" href="logout.php">logout</a>
     <a id="button" href="test/asd.php">generate test</a>
     <a id="button" href="student_info.php">User guide</a>
+
+    <style>
+        #table{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-collapse: collapse;
+            width: 100%;
+            margin: auto;
+        }
+        tbody{
+            border: 5px solid #e5e5e5;
+            border-radius: 10px;
+        }
+    </style>
 </div>
 </body>
 
@@ -53,7 +69,7 @@ foreach ($pdo->query($sql) as $row) {
     $current_time = strtotime(date("Y-m-d H:i:s"));
     if($current_time < $time_from && $current_time > $time_to){
         //instead of generate button take image from images/lock.png
-        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td><img width=30px height=30px src='images/lock.png'></td></tr>";
+        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'><img width=30px height=30px src='images/lock.png'></td></tr>";
         continue;
 
 
@@ -63,7 +79,7 @@ foreach ($pdo->query($sql) as $row) {
         $current_time = strtotime(date("Y-m-d H:i:s"));
         if($current_time < $time_from){
             //instead of generate button take image from images/lock.png
-            echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td><img width=30px height=30px src='images/lock.png'></td></tr>";
+            echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'><img width=30px height=30px src='images/lock.png'></td></tr>";
             continue;
 
 
@@ -74,19 +90,19 @@ foreach ($pdo->query($sql) as $row) {
         $current_time = strtotime(date("Y-m-d H:i:s"));
         if($current_time > $time_to){
             //instead of generate button take image from images/lock.png
-            echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td><img width=30px height=30px src='images/lock.png'></td></tr>";
+            echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'><img width=30px height=30px src='images/lock.png'></td></tr>";
             continue;
 
 
         }
     }
     if($stmt->rowCount() > 0){
-        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td>Completed, points: $points</td></tr>";
+        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'>Completed, points: $points</td></tr>";
     }
     else{
 
 
-        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td><a href='/zaverecne/test/asd.php?filename=".$row['filename']."'>Generate</a></td></tr>";
+        echo "<tr><td>".$row['filename']."</td><td>".$row['time_from']."</td><td>".$row['time_to']."</td><td>".$row['point']."</td><td id='lastrow'><a href='/zaverecne/test/asd.php?filename=".$row['filename']."'>Generate</a></td></tr>";
 }}
 echo "</table>";
 
