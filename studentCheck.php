@@ -34,14 +34,15 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="csvDownload.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script defer src="//unpkg.com/mathlive"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="csvDownload.js"></script>
+
 
     <style>
         html, body {
@@ -107,9 +108,10 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 <br>
 <div class="tableDiv">
+<!--    id="myTable"-->
     <table class="table" id="myTable">
         <thead>
-        <tr class="headerTR">
+        <tr class="headerTR" >
             <th>Meno a priezvisko</th>
             <th>ID(login)</th>
             <th>Vygenerované testy</th>
