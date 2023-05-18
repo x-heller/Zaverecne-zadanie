@@ -50,9 +50,14 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             border-right: black solid 1px;
         }
 
+
         td.last,
         th.last {
             border-right: none;
+        }
+        .resultTable td{
+            height: 40px;
+            border-right: black solid 1px;
         }
     </style>
 </head>
@@ -131,7 +136,8 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <th>Answer</th>
             <th>Point</th>
             <th>Test ID</th>
-            <th class="last">Section</th>
+            <th>Section</th>
+            <th class="last"></th>
         </tr>
         </thead>
 
@@ -145,14 +151,25 @@ $users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             $stmt->execute(['login' => $student["login"]]);
             $studentsName = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            $correct = "images/correct.png";
+            $failed = "images/failed.png";
+
+            if ($student["points"] > 0){
+                $imageSrc = $correct;
+            } else {
+                $imageSrc = $failed;
+            }
+            $lastCol = "<td class='last'><img src='$imageSrc' style='width: 25px'></td>";
+
             $solution = $student["answer"];
-            echo "<tr class='tableTR'>";
+            echo "<tr class='tableTR, resultTable'>";
             echo "<td>".$studentsName['fullname']."</td>";
             echo "<td>".$student["login"]."</td>";
             echo "<td>"."<math-field id='mf' readonly='true'>$solution</math-field>"."</td>";
             echo "<td>".$student["points"]."</td>";
             echo "<td>".$student["testid"]."</td>";
-            echo "<td class='last'>".$student["section"]."</td>";
+            echo "<td>".$student["section"]."</td>";
+            echo $lastCol;
             echo "</tr>";
             $count++;
         }
