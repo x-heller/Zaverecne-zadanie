@@ -1,4 +1,9 @@
 <?php
+//error check
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_start();
 $login = $_GET['login'];
 $points = $_GET['points'];
 $testid = $_GET['testid'];
@@ -15,6 +20,25 @@ else{
 
 require_once "../config.php";
 $pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+//check which user sent the test and add +1 to the number of tests sent
+$sql = "SELECT * FROM users WHERE login = :login";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':login', $login);
+$success = $stmt->execute();
+if ($success) {
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $id = $row['id'];
+            $tests_sent = $row['odovzdanie'];
+            $tests_sent = intval($tests_sent) + 1;
+            $sql = "UPDATE users SET odovzdanie = :tests_sent WHERE id = :id";
+            $stmt2 = $pdo->prepare($sql);
+            $stmt2->bindParam(':tests_sent', $tests_sent);
+            $stmt2->bindParam(':id', $id);
+            $success = $stmt2->execute();
+        }
+    }
+}
 
 $sql = "INSERT INTO student (login, answer, points, testid, section) VALUES (:login, :answer, :points, :testid,:section)";
 $stmt = $pdo->prepare($sql);
@@ -41,7 +65,7 @@ $stmt->execute();
 <body>
 
 <div class="container">
-    <div class="row">
+    <div class="row1">
         <div class="col-12">
             <h3 class="name"><?php echo $login?></h3>
             <h1 class="stitle">Test Complete || Test bol odoslaný</h1>
