@@ -1,11 +1,10 @@
 <?php
-//errors
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["type"] == "teacher") {
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["type"] == "teacher") {
     //echo "Hello teacher";
 } else {
     header("location: login.php");
@@ -19,13 +18,8 @@ $stmt = $pdo->query($sql);
 $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$sql2 = "SELECT fullname FROM users";
-$stmt2 = $pdo->prepare($sql2);
-$studentsName = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-echo $studentsName[0];
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,21 +36,24 @@ echo $studentsName[0];
     <script defer src="//unpkg.com/mathlive"></script>
 
     <style>
-        .headerTR th{
+        .headerTR th {
             border-bottom: black solid 1px;
             border-right: black solid 1px;
         }
-        .tableTR td{
+
+        .tableTR td {
             border-right: black solid 1px;
         }
-        td.last, th.last{
+
+        td.last,
+        th.last {
             border-right: none;
         }
     </style>
 </head>
 <body>
 <h1 id="title">Teacher portal</h1>
-<h3 id="name"><?php echo $_SESSION["fullname"]?></h3>
+<h3 id="name"><?= $_SESSION["fullname"] ?></h3>
 <div id="buttoncontainer">
     <a id="button" href="logout.php">logout</a>
     <a id="button" href="teacher_info.php">User guide</a>
@@ -64,8 +61,8 @@ echo $studentsName[0];
 </div>
 
 <br>
-<div id="tableDiv">
-    <table>
+<div class="tableDiv">
+    <table class="table">
         <thead>
         <tr class="headerTR">
             <th>Meno</th>
@@ -79,9 +76,8 @@ echo $studentsName[0];
     </table>
 </div>
 <br>
-<div id="tableDiv">
-    <!--class="table table-bordered table-striped  table-hover"-->
-    <table>
+<div class="tableDiv">
+    <table class="table">
         <thead>
         <tr class="headerTR">
             <th>Meno Priezvisko</th>
@@ -95,17 +91,24 @@ echo $studentsName[0];
 
         <tbody>
         <?php
-        foreach ($students as $student){
+        $count = 0;
+        foreach ($students as $student) {
+            //get the student fullname from users database where login is the same as student login
+            $sql = "SELECT fullname FROM users WHERE login = :login";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['login' => $student["login"]]);
+            $studentsName = $stmt->fetch(PDO::FETCH_ASSOC);
+
             $solution = $student["answer"];
-            //echo $solution;
             echo "<tr class='tableTR'>";
-            echo "<td>".$studentsName[$student]."</td>"; //ez a neve tobbi jo
+            echo "<td>".$studentsName['fullname']."</td>";
             echo "<td>".$student["login"]."</td>";
-            echo "<td>"."<math-field id='mf' readonly='true' > $solution </math-field>"."</td>";
+            echo "<td>"."<math-field id='mf' readonly='true'>$solution</math-field>"."</td>";
             echo "<td>".$student["points"]."</td>";
             echo "<td>".$student["testid"]."</td>";
             echo "<td class='last'>".$student["section"]."</td>";
             echo "</tr>";
+            $count++;
         }
         ?>
         </tbody>
@@ -119,3 +122,4 @@ echo $studentsName[0];
 </script>
 </body>
 </html>
+
