@@ -18,6 +18,11 @@ $stmt = $pdo->query($sql);
 $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
+$sql2 = "SELECT * FROM users WHERE type = 'student'";
+$stmt2 = $pdo->query($sql2);
+$users = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -65,14 +70,55 @@ $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table class="table">
         <thead>
         <tr class="headerTR">
-            <th>Meno</th>
-            <th>Priezvisko</th>
+            <th>Meno a priezvisko</th>
             <th>ID(login)</th>
-            <th>Vygenerované</th>
-            <th>Odovzdané</th>
+            <th>Vygenerované testy</th>
+            <th>Odovzdané testy</th>
             <th class="last">Všetky body</th>
         </tr>
         </thead>
+        <tbody>
+        <?php
+        $count = 0;
+        foreach ($users as $user) {
+            //get the student fullname from users database where login is the same as student login
+            /*$sql = "SELECT fullname FROM users WHERE login = :login";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['login' => $student["login"]]);
+            $studentsName = $stmt->fetch(PDO::FETCH_ASSOC);*/
+
+            //get the number of generated tests
+            $sql = "SELECT COUNT(*) FROM generate WHERE login = :login";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['login' => $user["login"]]);
+            $generated = $stmt->fetch(PDO::FETCH_ASSOC);
+            //echo $generated["COUNT(*)"];
+
+            //get the number of submitted tests
+            $sql2 = "SELECT COUNT(*) FROM odovzdane WHERE login = :login";
+            $stmt2 = $pdo->prepare($sql2);
+            $stmt2->execute(['login' => $user["login"]]);
+            $submitted = $stmt2->fetch(PDO::FETCH_ASSOC);
+            //echo $submitted["COUNT(*)"];
+
+            //get the number of points
+            $sql3 = "SELECT SUM(points) FROM student WHERE login = :login";
+            $stmt3 = $pdo->prepare($sql3);
+            $stmt3->execute(['login' => $user["login"]]);
+            $points = $stmt3->fetch(PDO::FETCH_ASSOC);
+            //echo $points["SUM(points)"];
+
+            echo "<tr class='tableTR'>";
+            echo "<td>".$user['fullname']."</td>";
+            echo "<td>".$user["login"]."</td>";
+            echo "<td>".$generated["COUNT(*)"]."</td>";
+            echo "<td>".$submitted["COUNT(*)"]."</td>";
+            echo "<td class='last'>".$points["SUM(points)"]."</td>";
+            echo "</tr>";
+            $count++;
+        }
+        ?>
+        </tbody>
     </table>
 </div>
 <br>
@@ -80,7 +126,7 @@ $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table class="table">
         <thead>
         <tr class="headerTR">
-            <th>Meno Priezvisko</th>
+            <th>Meno a priezvisko</th>
             <th>ID(login)</th>
             <th>Answer</th>
             <th>Point</th>
