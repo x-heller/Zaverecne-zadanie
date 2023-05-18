@@ -3,7 +3,7 @@ function downloadCSV() {
     var data = tableToCSV(table);
 
     var link = document.createElement('a');
-    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent('\uFEFF' + data.replace(/%20/g, ' '))); // Add the UTF-8 BOM character and replace %20 with spaces
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent('\uFEFF' + data));
     link.setAttribute('download', 'table.csv');
     link.style.display = 'none';
 
@@ -30,7 +30,7 @@ function tableToCSV(table) {
         var rowData = [];
 
         for (var j = 0; j < cells.length; j++) {
-            rowData.push(encodeURIComponent(cells[j].textContent));
+            rowData.push(cells[j].textContent);
         }
 
         csvData.push(rowData.join(','));
