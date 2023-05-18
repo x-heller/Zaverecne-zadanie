@@ -29,7 +29,7 @@ $randomTask = $taskArray[$randomIndex];
 $randomSolution = $solutionArray[$randomIndex];
 
 // Replace LaTeX image inclusion with HTML img tag
-$randomTask = preg_replace('/\\\\includegraphics\{(.*?)\}/', '<img src="../../$1" alt="Block Diagram">', $randomTask);
+$randomTask = preg_replace('/\\\\includegraphics\{(.*?)\}/', '<img class="pic" src="../../$1" alt="Block Diagram">', $randomTask);
 
 // Decode LaTeX special characters
 $randomTask = html_entity_decode($randomTask, ENT_QUOTES);
@@ -129,11 +129,58 @@ $connection = null;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="//unpkg.com/@cortex-js/compute-engine"></script>
     <style>
-        #mf{
-            min-width: 200px;
-            min-height: 50px;
-            font-size: 30px;
+        html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        body{
+            margin: 20px;
+        }
+        #mf{
+            width: 200px;
+            height: 50px;
+            font-size: 30px;
+            margin: 0 auto;
+            display: block;
+        }
+        .pic{
+            width: 800px;
+            margin: 0 auto;
+            display: block;
+        }
+        @media screen and (max-width: 800px) {
+            .pic{
+                width: 98%;
+            }
+            body{
+                margin: 0;
+            }
+        }
+        span{
+            font-size: 20px;
+
+        }
+        p{
+            font-size: 20px;
+            margin: 30px auto;
+            text-align: center;
+        }
+        h1{
+            padding-top: 20px;
+            text-align: center;
+        }
+        #mf{
+            width: 400px;
+        }
+
+        button{
+            border-radius: 5px;
+            width: 60px;
+            height: 40px;
+            margin: 20px auto;
+            display: block;
+            border: transparent;
+        }
+
     </style>
     <script>
         let correct = false;
@@ -246,7 +293,7 @@ $connection = null;
     <script defer src="//unpkg.com/mathlive"></script>
 </head>
 <body>
-<h1>Your task is || Vaša úloha je:</h1>
+<h1>Your task is - Vaša úloha je:</h1>
 <p><?php echo $randomTask; ?></p>
 
 <!--<h1>Random Solution:</h1>-->
@@ -256,7 +303,7 @@ $connection = null;
 <math-field id="mf"></math-field>
 
 
-<button id="submitSolution" onclick="submitSolution()">Submit</button>
+<button style="box-shadow: 0 1px 2px 1px #ddd;color: #ffffff;background-color: #3993f0;" class="btn btn-sm btn-google btn-block text-uppercase btn-outline my-btn" id="submitSolution" onclick="submitSolution()">Submit</button>
 
 <style>
     #solutionContainer {
